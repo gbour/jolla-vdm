@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="fr_FR">
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>FML API Documentation</title>
+	
+	<link rel="stylesheet" href="/readme.css" type="text/css" />
+	
+	<meta name="author" content="Beta&amp;Cie" />
+	
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<h1>Summary</h1>
+
+<p>You will find below the FML API documentation:</p>
+
+<ul>
+    <li>Getting started</li>
+</ul>
+
+<ul>
+    <li>Developer key</li>
+    <li>Website language</li>
+    <li>Members authentication</li>
+    <li>Error codes</li>
+    <li>Badges</li>
+</ul>
+
+<ul>
+    <li>/view</li>
+    <li>/vote</li>
+    <li>/thumb</li>
+    <li>/submit</li>
+    <li>/comment</li>
+    <li>/edit</li>
+    <li>/mod</li>
+    <li>/abuse</li>
+    <li>/account</li>
+    <li>/blog</li>
+    <li>/dev</li>
+</ul>
+
+<h1>Getting started</h1>
+
+<p>API calls must be made through HTTP requests to the domain <b>api.fmylife.com</b>, like this:</p>
+
+<pre>GET/POST http://api.fmylife.com/view/last</pre>
+
+<p>The return format is XML, which in its simplest shape looks like this:</p>
+
+<pre>&lt;root&gt;
+    ( ... answer ... )
+    &lt;code&gt;1&lt;/code&gt;
+    &lt;errors/&gt;
+&lt;/root&gt;</pre>
+
+<ul>
+<li>code equals 1 if the operation is a success, 0 if else</li>
+<li>errors contains error explanations in case of a 0 code</li>
+</ul>
+
+<p>XML returns will not be explained, do tests by yourself, they are explicit enough not to be documented. :)</p>
+
+<p>In order to make tests without affecting the real database, you can use <b>sandbox.betacie.com</b> as server name instead of the usual api.fmylife.com.</p>
+
+<h1>Developer key</h1>
+
+<!-- <p>A developer key is mandatory in order to make actions that need member authentication. If you have an open-source application or if your application doesn't need member authentication you can use the API "read only" mode:</p>
+
+<pre>?key=readonly</pre>
+
+<p>Please note that if you provide a bad developer key, you will be automatically switched to read only mode.</p> //-->
+
+<p>In order to fully use the API, you need a developer key. You have to request it on the website (API section), you'll instantly receive a key in your e-mail box.</p>
+
+<p>Once you got your key, you'll have to always mention it as a parameter in your API calls:</p>
+
+<pre>?key=XXXXXXXXXXXXX</pre>
+
+<p>This key allows us to create some statistics about API use, and therefore improve it in a faster and simpler way. We will also be able to contact you to notify you about major API updates.</p>
+
+<h1>Website language</h1>
+
+<p>As you probably already know, a french version of FML exists ([url=http://www.viedemerde.fr]www.viedemerde.fr[/url]). The API supports both languages, and will display the english version by default even if you do not specify the language in the following parameter:</p>
+
+<pre>?language=en</pre>
+
+<p>Other languages available:</p>
+
+<ul>
+<li>Spanish: es</li>
+<li>French: fr</li>
+<li>Italian: it</li>
+<li>Swedish: se</li>
+</ul>
+
+<h1>Members authentication</h1>
+
+<p>You can identify a member by FML account via the API, by sending their login and password (MD5 encrypted):</p>
+
+<pre>POST http://api.fmylife.com/account/login/&lt;login&gt;/&lt;md5_password&gt;</pre>
+
+<p>By calling up this method (in POST), you will receive a character chain called token, that you will need to act upon their account  via the API:</p>
+
+<pre>&token=XXXXXXXXXXXXX</pre>
+
+<p>Please note that inactive tokens will be deleted after 15 days of inactivity.</p>
+
+<p>You are also <b>strongly encouraged</b> to send the IP address of your user with this parameter:</p>
+
+<pre>&ip=XXX.XXX.XXX.XXX</pre>
+
+<h1>Error codes</h1>
+
+<p>The error codes returned by the API consist of 4 numeric characters: XYYY, where X is the type of the error, and YYY the error code itself.</p>
+
+<pre>&lt;errors&gt;
+    &lt;error code="XYYY"&gt;Error text&lt;/error&gt;
+&lt;/errors&gt;</pre>
+
+<ul>
+<li><strong>1: API errors</strong></li>
+<li>1001: Action impossible in read-only mode.</li>
+<li>1002: Invalid API key.</li>
+<li>1003: Too many requests - aborting</li>
+<li>1004: No corresponding parameter.</li>
+<li>1005: Comments closed.</li>
+</ul>
+
+<ul>
+<li><strong>2: User errors</strong></li>
+<li>2001: Invalid or nonexistent token.</li>
+<li>2002: Already voted.</li>
+<li>2003: Your member's account has been banned.</li>
+<li>2004: The e-mail address of your account has not been verified.</li>
+<li>2005: Bad login information.</li>
+<li>2006: This user name or e-mail address is already in use on the website. Please select another.</li>
+<li>2007: Anti-flood protection. Please wait a moment before posting another comment.</li>
+<li>2008: Banned IP address. If you believe this to be a mistake, please contact us.</li>
+<li>2009: Out of time limit</li>
+<li>2010: The specified member doesn't exist.</li>
+</ul>
+
+<ul>
+<li><strong>3: Variable errors</strong></li>
+<li>3001: Variable is missing</li>
+<li>3002: Bad article number.</li>
+<li>3003: Article length must be greater than 30 characters.</li>
+<li>3004: URLs are forbidden in stories.</li>
+<li>3005: E-mails are forbidden in stories.</li>
+<li>3006: Your login contains invalid characters.</li>
+<li>3007: You must enter a valid e-mail address.</li>
+<li>3008: Filesize exceeded.</li>
+<li>3009: Invalid filetype.</li>
+<li>3010: Invalid submitted data.</li>
+</ul>
+
+<h1>Badges</h1>
+
+<p>Users can win badges during their navigation or through their actions on the website. A badge tag can appear anytime in the main XML feed. It will look like this:</p>
+
+<pre>&lt;badge&gt;
+&lt;id&gt;592&lt;/id&gt;
+&lt;name&gt;Le Gold Badge&lt;/name&gt;
+&lt;type&gt;gold&lt;/type&gt;
+&lt;description&gt;This badge was designed for you!&lt;/description&gt;
+&lt;/badge&gt;</pre>
+
+<p>Don't forget to check for this tag at every request.</p>
+
+<h1>Method: /view</h1>
+
+<p>Displays the FML in several ways.</p>
+
+<p>If the token is specified, you will have extra data added to the displayed FML:</p>
+
+<ul>
+<li>last_read_comment: The ID of the last comment read by the user. Set to 0 if the user is not following comments.</li>
+<li>vote &gt; agree & deserved: Set to 0 or 1 depending on the user's votes on this FML.</li>
+</ul>
+
+<p>Available actions below:</p>
+
+<pre>GET http://api.fmylife.com/view/last/&lt;page&gt;</pre>
+
+<p>Displays the latest FMLs displayed on the website by pages of 15 items.</p>
+
+<pre>GET http://api.fmylife.com/view/random[/number|nosex]</pre>
+
+<p>Displays [number] random FML with it’s comments (default is 1). If you set the /nosex parameter, random won't display intimacy stories. Add the parameter "unvoted" if you only want unvoted FML from the authenticated user.</p>
+
+<pre>GET http://api.fmylife.com/view/top/&lt;page&gt;</pre>
+
+<p>Displays the top FMLs. To specify an interval, change the parameter to: top_day / top_week / top_month</p>
+
+<pre>GET http://api.fmylife.com/view/flop/&lt;page&gt;</pre>
+
+<p>Displays the flop FMLs. To specify an interval, change the parameter to: flop_day / flop_week / flop_month</p>
+
+<pre>GET http://api.fmylife.com/view/&lt;cat&gt;/&lt;page&gt;</pre>
+
+<p>Displays the latest FMLs in the selected category, by pages of 15 items. The parameter can be: love / money / kids / work / health / sex / miscellaneous</p>
+
+<pre>GET http://api.fmylife.com/view/&lt;number&gt;[/nocomment]</pre>
+
+<p>Displays the FML #[number] with its associated comments. Add the /nocomment parameter to not display the comments.</p>
+
+<pre>GET http://api.fmylife.com/view/&lt;number&gt;?since_id=&lt;id&gt;</pre>
+
+<p>Displays the FML #[number] with its associated comments. The since_id parameter starts with 0, 15 comments by default. Set the since_id parameter with the last comment ID you received. You can set the nb parameter to change the number of comments per page.</p>
+
+<pre>GET http://api.fmylife.com/view/&lt;number&gt;/&lt;page&gt;</pre>
+
+<p>Displays the FML #[number] with its associated paginated comments. The page parameter starts with 1, 15 comments by default. You can set the nb parameter to change the number of comments per page.</p>
+
+<pre>POST http://api.fmylife.com/view/search?search=&lt;string&gt;</pre>
+
+<p>Displays the FMLs corresponding to the search. To see the tips, have a look at the page concerning searches on FML. Be careful, this is done in POST!</p>
+
+<pre>GET http://api.fmylife.com/view/categories</pre>
+
+<p>Displays the categories available on the site.</p>
+
+<pre>GET http://api.fmylife.com/view/new</pre>
+
+<p>Displays the member's unread FMLs.</p>
+
+<pre>GET http://api.fmylife.com/view/favorites[/page]</pre>
+
+<p>Displays the member's favorite FMLs.</p>
+
+<pre>GET http://api.fmylife.com/view/illustrated[/page]</pre>
+
+<p>Displays the illustrated FMLs. Variable page is set to 0 by default.</p>
+
+<pre>GET http://api.fmylife.com/view/illustrated/id/&lt;id&gt;</pre>
+
+<p>Displays the ID-specified illustrated FML.</p>
+
+<h1>Method: /thumb</h1>
+
+<p>Thumb up or down an FML comment. This function is for FML members only (token).</p>
+
+<pre>GET http://api.fmylife.com/thumb/&lt;id&gt;/&lt;type&gt;</pre>
+
+<p>Replace with the ID number of the FML comment you want to thumb, and the type: up / down</p>
+
+<h1>Method: /vote</h1>
+
+<p>This action allows voting for FMLs via the API. This function is for FML members only (token).</p>
+
+<pre>GET http://api.fmylife.com/vote/&lt;number&gt;/&lt;type&gt;</pre>
+
+<p>Unique function of the vote action, replace with the number of the FML being voted for, and the type: agree / deserved</p>
+
+<h1>Method: /submit</h1>
+
+<p>Sends a FML. This function is for FML members only (token).</p>
+
+<pre>GET http://api.fmylife.com/submit</pre>
+
+<p>Be careful, the elements of the form are submitted in parameters:</p>
+
+<pre>
+&author= // FML author
+&cat= // Category
+&text= // Text
+&mail= // E-mail address (optional)
+&gender= // Gender (optional)
+</pre>
+
+<p>The category can be: love/money/work/health/sex/miscellaneous. The same restrictions for the submission of a FML via the site apply: notably the limitation of 300 characters.</p>
+
+<p>If mail is set to <strong>true</strong> and a token is provided, the mail field is automatically filled with the user account's.</p>
+
+<h1>Method: /comment</h1>
+
+<p>Send a comment on an FML:</p>
+
+<pre>GET http://api.fmylife.com/comment</pre>
+
+<p>Be careful, the elements of the form are submitted in parameters:</p>
+
+<pre>
+&id= // FML ID
+&text= // Text
+&in_reply_to= // Global ID the comment replies to (optional)
+&type= // Type commented (default: articles)
+</pre>
+
+<p>The user posting a comment must be a FML member, and identified as such via the API (token).</p>
+
+<p>You can specify the type, by default it's articles (for commenting FMLs). For blog posts, set type=blog_posts.</p>
+
+<h1>Method: /edit</h1>
+
+<p>Edit a comment on an FML:</p>
+
+<pre>GET http://api.fmylife.com/edit</pre>
+
+<p>Be careful, the elements of the form are submitted in parameters:</p>
+
+<pre>
+&id= // Comment ID
+&ref_id= // FML ID
+&text= // Text
+&type= // Type commented (default: articles)
+</pre>
+
+<p>The user editing a comment must be the author of the comment, and identified as such via the API (token).</p>
+
+<h1>Method: /mod</h1>
+
+<p>Integration of the auto-moderation system in the API:</p>
+
+<pre>GET http://api.fmylife.com/mod/last</pre>
+
+<p>Displays the last FML to be moderated.</p>
+
+<pre>GET http://api.fmylife.com/mod/list/&lt;number&gt;[/since_id]</pre>
+
+<p>Displays a list of a certain number of FML to be moderated. If you specify since_id, you'll get only the FML submitted after this ID.</p>
+
+<pre>GET http://api.fmylife.com/mod/view[/number]</pre>
+
+<p>Without the [number], this command returns the list of all the FMLs left to be moderated. With the [number], it displays the particular FML.</p>
+
+<pre>GET http://api.fmylife.com/mod/&lt;yes|no&gt;/&lt;number&gt;</pre>
+
+<p>Moderates whether YES or NO the FML in question should be accepted on the site.</p>
+
+<h1>Method: /abuse</h1>
+
+<p>Report an abuse through the API. User must be logged:</p>
+
+<pre>GET http://api.fmylife.com/abuse/article/&lt;number&gt;</pre>
+
+<p>Report an abuse about a currently auto-moderated FML.</p>
+
+<pre>GET http://api.fmylife.com/abuse/comment/&lt;number&gt;</pre>
+
+<p>Report an abuse about an FML comment. The number is the ID, not the public displayed number. You can add a "description" parameter.</p>
+
+<h1><a name="account"></a>Method: /account</h1>
+
+<p>Utilities for the members accounts:</p>
+
+<pre>GET http://api.fmylife.com/account/signup?mail=&lt;mail&gt;&login=&lt;login&gt;&pass=&lt;pass&gt;</pre>
+
+<p>Sign up for a new account. Either in POST or GET.</p>
+
+<pre>GET http://api.fmylife.com/account/infos?login=&lt;login&gt;</pre>
+
+<p>Returns informations about the specified account. If login is empty, returns informations about the identified account. If you add the parameter "seen", the visits and likes will be marked as seen (identified account only).</p>
+
+<pre>POST http://api.fmylife.com/account/update</pre>
+
+<p>Update profile informations. You can specify which information you want to update:</p>
+
+<ul>
+	<li>day=NN&month=NN&year=NNNN : Birthday.</li>
+	<li>title=(Mr|Mrs|Miss) : Title.</li>
+	<li>hide=(0|1) : Hide the user's profile.</li>
+	<li>city=XXX : City name.</li>
+	<li>country=XXX : Country name.</li>
+	<li>relationship=(single|couple|complicated|empty) : Relationship status.</li>
+	<li>timezone=XXX : Timezone settings.</li>
+	<li>description=XXX : User's profile description.</li>
+	<li>mail=XXX : User's e-mail address.</li>
+	<li>password=XXX : Users's password. Must send the current= parameter with the current password in MD5.</li>
+</ul>
+
+<p><strong>Note :</strong> For the title parameter, the value changes according to the website's locales. For the timezone parameter, please use standard values.</p>
+
+<pre>POST http://api.fmylife.com/account/upload?photo=&lt;photo&gt;&number=1</pre>
+
+<p>Uploads a profile picture for the identified account. Must be a multipart POST request. Number is the number of the photo (1, 2 or 3).</p>
+
+<pre>GET http://api.fmylife.com/account/upload/delete?number=1</pre>
+
+<p>Deletes the profile picture for the identified account. Number is the number of the photo (1, 2 or 3).</p>
+
+<pre>POST http://api.fmylife.com/account/like/&lt;id&gt;</pre>
+
+<p>Like the destination account.</p>
+
+<pre>GET http://api.fmylife.com/account/favorites/[add|delete]/&lt;id&gt;</pre>
+
+<p>Add/delete a specified FML to/from the user's favorites.</p>
+
+<pre>GET http://api.fmylife.com/account/follow/[do|undo]/&lt;id&gt;</pre>
+
+<p>Follow/Unfollow specified FML comments.</p>
+
+<pre>GET http://api.fmylife.com/account/option/&lt;name&gt;/[0|1]</pre>
+
+<p>Set / Unset authenticated user option. Available option names : display.people (FR only), profile.activity (show online or offline on profile), inbox.receipt (display read status on messages), push.mp (push alert for MP), push.like (push alert for Like).</p>
+
+<pre>GET http://api.fmylife.com/account/badges</pre>
+
+<p>Displays identified user's badges.</p>
+
+<pre>GET http://api.fmylife.com/account/statuses</pre>
+
+<p>Displays identified user's submitted stories statuses (0 = In moderation, 1 = Accepted, 2 = Rejected).</p>
+
+<pre>GET http://api.fmylife.com/account/mailbox/summary[/page]</pre>
+
+<p>Displays the received messages from the user. You can use the "summary" parameter to hide the text tag. Pages of 30 items by default, but you can add a &nbpp= numeric parameter.</p>
+
+<pre>POST http://api.fmylife.com/account/mailbox/compose</pre>
+
+<p>Compose a message to another member, using following parameters:</p>
+
+<ul>
+    <li>loginid= : Login ID of the recipient.</li>
+    <li>text= : Message text. Limited to 6000 characters.</li>
+</ul>
+
+<pre>GET http://api.fmylife.com/account/mailbox/view/&lt;id&gt;?page=&lt;page&gt;</pre>
+
+<p>Displays the specified message discussion by pages of 100 messages. Add the read=false parameter if you don't want to marke the discussion as read.</p>
+
+<pre>GET http://api.fmylife.com/account/mailbox/read/&lt;id&gt;</pre>
+
+<p>Marks as read the specified message discussion.</p>
+
+<pre>GET http://api.fmylife.com/account/mailbox/delete/&lt;id&gt;</pre>
+
+<p>Delete the specified message ID <b>discussion</b>. User can be the sender or the receiver.</p>
+
+<pre>POST http://api.fmylife.com/account/mailbox/abuse/&lt;id&gt;</pre>
+
+<p>Report a conversation for abuse, with the ID of the specified message.</p>
+
+<ul>
+    <li>description= : Abuse description.</li>
+</ul>
+
+<pre>GET http://api.fmylife.com/account/contacts/list</pre>
+
+<p>Displays the user's contacts list.</p>
+
+<pre>GET http://api.fmylife.com/account/contacts/add/&lt;loginid&gt;</pre>
+
+<p>Adds a user to user's contacts list.</p>
+
+<pre>GET http://api.fmylife.com/account/contacts/delete/&lt;loginid&gt;</pre>
+
+<p>Deletes a user from user's contacts list.</p>
+
+<pre>GET http://api.fmylife.com/account/contacts/block/&lt;loginid&gt;</pre>
+
+<p>Block the specified login ID from user's contacts list.</p>
+
+<pre>GET http://api.fmylife.com/account/contacts/unblock/&lt;loginid&gt;</pre>
+
+<p>Un-block a user from user's contacts list.</p>
+
+<pre>GET http://api.fmylife.com/account/logout/[token]</pre>
+
+<p>Deletes the API’s basic token to completely disconnect the member.</p>
+
+<pre>POST http://api.fmylife.com/account/password?mail=&lt;mail&gt;</pre>
+
+<p>Send a mail to the user in order to reset his lost password. Submitted mail must match the account mail.</p>
+
+<pre>POST http://api.fmylife.com/account/validation</pre>
+
+<p>Send one more time the account validation mail to the authenticated user.</p>
+
+<pre>POST http://api.fmylife.com/account/delete</pre>
+
+<p>Send a mail with a link to delete the authenticated user's account.</p>
+
+<h1>Method: /blog</h1>
+
+<pre>GET http://api.fmylife.com/blog/summary[/page]</pre>
+
+<p>Displays the latest blog posts summaries published on the website by pages of 15 items.</p>
+
+<pre>GET http://api.fmylife.com/blog/view/&lt;number&gt;[/nocomment]</pre>
+
+<p>Displays the blog post #[number] with its associated comments. Add the /nocomment parameter to hide the comments.</p>
+
+<h1>Method: /dev</h1>
+
+<pre>GET http://api.fmylife.com/dev</pre>
+
+<p>Displays several statistics about your API developpers account.</p>
+
+</div>
+
+</body>
+
+</html>
