@@ -1,4 +1,4 @@
-https://github.com/gbour/jolla-vdm.git# NOTICE:
+# NOTICE:
 #
 # Application name defined in TARGET has a corresponding QML filename.
 # If name defined in TARGET is changed, the following needs to be done
@@ -21,9 +21,7 @@ DEFINES += APIKEY='\\\"$$system(cat APIKEY)\\\"'
 CONFIG += sailfishapp
 
 SOURCES += src/VDM.cpp \
-    src/global.cpp \
-    story.cpp \
-    src/downloadmanager.cpp
+    src/global.cpp
 
 OTHER_FILES += qml/VDM.qml \
     qml/cover/CoverPage.qml \
@@ -32,21 +30,21 @@ OTHER_FILES += qml/VDM.qml \
     rpm/VDM.changes.in \
     rpm/VDM.spec \
     rpm/VDM.yaml \
-    translations/*.ts \
+    #translations/*.ts \
     VDM.desktop \
-    qml/lib/htmlparser2.js \
-    qml/lib/iso8859-15.js \
-    qml/logic/context.js \
-    qml/logic/scraper.js \
-    qml/logic/api.js
+    qml/logic/api.js \
+    qml/lib/xmlparser.js \
+    qml/models/ArticleItem.qml \
+    qml/pages/ArticleList.qml \
+    qml/pages/ArticleDelegate.qml \
+    qml/lib/utils.js \
+    qml/pages/MyItem.qml \
+    qml/res/icon.png
 
 # to disable building translations every time, comment out the
 # following CONFIG line
-CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/VDM-de.ts
+#CONFIG += sailfishapp_i18n
+#TRANSLATIONS += translations/VDM-de.ts
 
 HEADERS += \
-    src/global.h \
-    story.h \
-    src/downloadmanager.h
-
+    src/global.h
