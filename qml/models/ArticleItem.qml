@@ -32,6 +32,9 @@ ListModel {
                 console.log('item=' + item + ","  + typeof(item))
                 console.log(item.id);
 
+                item.date = new Date(item.date).toLocaleDateString();
+                item.author_name = item.author.author;
+                item.author = undefined;
                 console.log(Utils.dump(item));
 
                 append(item);

@@ -32,6 +32,13 @@ ListItem {
     //height: 120
     //height: children.height
 
-
+    MyItem {
+        author: model.author_name;
+        date: model.date;
+        story: model.text;
+        comments: model.comments;
+        agreed: model.agree;
+        deserved: model.deserved;
+    }
 
 }
