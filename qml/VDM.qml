@@ -37,7 +37,8 @@ ApplicationWindow
 {
     id: root
 
-    initialPage: Component { FirstPage { } }
+    //initialPage: Component { FirstPage { } }
+    initialPage: Component { ArticleList { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
     property var api: new Api.FmlApi(myglobal.uri, 'fr', myglobal.apikey);
