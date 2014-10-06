@@ -5,8 +5,8 @@ import Sailfish.Silica 1.0
 Rectangle {
     width: parent.width -10
     height: 100
-    border.width: 3
-    border.color: "#81C6DC" //"black"
+    //border.width: 3
+    //border.color: "#81C6DC" //"black"
     radius: 20
 
     //color: "#FFFFFFFFF00"
@@ -22,8 +22,7 @@ Rectangle {
     property string comments;
     property string agreed;
     property string deserved;
-
-
+/*
     Rectangle {
         id: avatar
         height: 40
@@ -41,12 +40,24 @@ Rectangle {
             source: '../res/icon.png'
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
-
             anchors {
                 fill: parent
                 margins: 3
             }
         }
+    }
+*/
+    Image {
+        id: category
+        source: '../res/work-small-white.png' //../res/love-small-white.png'
+        width: 20
+        height: 20
+
+        anchors {
+            left: story.left
+            bottom: story.top
+        }
+
     }
 
     Label {
@@ -56,10 +67,10 @@ Rectangle {
         text: parent.author
         font.pixelSize: Theme.fontSizeSmall - 6
         font.bold: true
-        color: "black"
+        //color: "black"
 
         anchors {
-            left: avatar.right
+            left: category.right //parent.left //avatar.right
             top: parent.top
 
             leftMargin: 10
@@ -82,7 +93,7 @@ Rectangle {
     Label {
         id: date
         text: parent.date //"28/09 14:35"
-        color: "black"
+        //color: "black"
         font.pixelSize: Theme.fontSizeSmall - 8
         font.italic: true
         //horizontalAlignment: Text.AlignRight
@@ -91,7 +102,7 @@ Rectangle {
             right: parent.right
             top: parent.top
 
-            rightMargin: 20
+            rightMargin: 10
             topMargin: 3
 
         }
