@@ -47,15 +47,14 @@ var XMLParser;
 		while (html) {
 			chars = true;
 
-            console.log('start= ' + html.substring(0,10) + ',' + stack.last());
+            //console.log('start= ' + html.substring(0,10) + ',' + stack.last());
 			// Make sure we're not in a script or style element
             if (!stack.last() || true) {
-                //console.log("CC2")
                 if( html.indexOf("<?xml") == 0) {
-                    console.log("xml")
+                    //console.log("xml")
                     var end = html.indexOf(">");
                     html = html.substring(end+1);
-                    chars=false
+                    chars = false;
                 }
 
 				// Comment
@@ -68,6 +67,18 @@ var XMLParser;
 						html = html.substring(index + 3);
 						chars = false;
 					}
+
+                } else if(html.indexOf("<![CDATA[") == 0) {
+                    //console.log('cdata');
+                    index = html.indexOf("]]>");
+                    if(index >= 0) {
+                        if(handler.chars) {
+                            handler.chars(html.substring(9, index));
+                        }
+
+                        html = html.substring(index+3);
+                        chars = false;
+                    }
 
 					// end tag
 				} else if (html.indexOf("</") == 0) {
@@ -82,7 +93,7 @@ var XMLParser;
 					// start tag
 				} else if (html.indexOf("<") == 0) {
 					match = html.match(startTag);
-                    console.log("star tag:" + match + "," + html.substring(0, 20) )
+                    //console.log("star tag:" + match + "," + html.substring(0, 20) )
 
 
 					if (match) {
@@ -93,9 +104,11 @@ var XMLParser;
 				}
 
 				if (chars) {
+                    //console.log('chars');
 					index = html.indexOf("<");
 
 					var text = index < 0 ? html : html.substring(0, index);
+                    //console.log('chars: ' + index + ',' + text);
 					html = index < 0 ? "" : html.substring(index);
 
 					if (handler.chars)
@@ -103,7 +116,7 @@ var XMLParser;
 				}
 
 			} else {
-                console.log('plop')
+                //console.log('plop')
                 html = html.replace(new RegExp("([\\s\\S]*?)<\/" + stack.last() + "[^>]*>"),
                                     function (all, text) {
 					text = text.replace(/<!--([\s\S]*?)-->|<!\[CDATA\[([\s\S]*?)]]>/g, "$1$2");

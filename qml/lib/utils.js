@@ -42,5 +42,12 @@ function clone(obj) {
     for (var attr in obj) {
         if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
+
+    /*
+    copy.length = function() {
+        return Object.keys(copy).length;
+    }
+    */
+
     return copy;
 }

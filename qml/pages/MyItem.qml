@@ -17,7 +17,7 @@ Rectangle {
 
     property string author;
     property string location;
-    property string date;
+    property string time;
     property string story;
     property string comments;
     property string agreed;
@@ -42,7 +42,7 @@ Rectangle {
             asynchronous: true
             anchors {
                 fill: parent
-                margins: 3
+                margins: 1
             }
         }
     }
@@ -92,8 +92,8 @@ Rectangle {
 
     Label {
         id: date
-        text: parent.date //"28/09 14:35"
-        //color: "black"
+        text: parent.time //"28/09 14:35"
+        color: "black"
         font.pixelSize: Theme.fontSizeSmall - 8
         font.italic: true
         //horizontalAlignment: Text.AlignRight
@@ -107,9 +107,11 @@ Rectangle {
 
         }
 
+        /*
         Component.onCompleted: {
             console.log("> " + parent.right + "," + parent.width)
         }
+        */
     }
 
     Label {
@@ -120,7 +122,7 @@ Rectangle {
         font.pixelSize: Theme.fontSizeSmall - 6
         wrapMode: Text.WordWrap
 
-        horizontalAlignment: Text.AlignJustify
+        horizontalAlignment: Text.AlignLeft
 
         anchors {
             //horizontalCenter: parent.horizontalCenter
@@ -236,14 +238,12 @@ Rectangle {
         }
         */
 
-
     Component.onCompleted: {
-        console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
+        //console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
         height = story.height + story.anchors.topMargin + 40
         parent.height = height + 20
 
         //console.log(model.author)
-        console.log(model.category)
-
+        //console.log(model.category)
     }
 }
