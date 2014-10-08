@@ -18,6 +18,7 @@ Rectangle {
     property string author;
     property string location;
     property string time;
+    property string category;
     property string story;
     property string comments;
     property string agreed;
@@ -49,7 +50,7 @@ Rectangle {
 */
     Image {
         id: category
-        source: '../res/work-small-white.png' //../res/love-small-white.png'
+        source: '../res/categories/'+parent.category+'.png'
         width: 20
         height: 20
 
@@ -244,6 +245,6 @@ Rectangle {
         parent.height = height + 20
 
         //console.log(model.author)
-        //console.log(model.category)
+        console.log(model.category)
     }
 }
