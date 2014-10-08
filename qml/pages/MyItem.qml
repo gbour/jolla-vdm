@@ -80,21 +80,26 @@ Rectangle {
         }
     }
 
-    /*
-        Label {
-            id: location
-            text: "Paris"
-            color: "black"
+    Label {
+        id: location
+        text: '(' + parent.location + ')'
+        font.pixelSize: Theme.fontSizeSmall - 8
+        font.italic: true
+        //color: "black"
 
-            anchors {
-                right: date.left
-            }
-        }*/
+        anchors {
+            right: date.left
+            rightMargin: 5
+
+            top: parent.top
+            topMargin: 3
+        }
+    }
 
     Label {
         id: date
         text: parent.time //"28/09 14:35"
-        color: "black"
+        //color: "black"
         font.pixelSize: Theme.fontSizeSmall - 8
         font.italic: true
         //horizontalAlignment: Text.AlignRight

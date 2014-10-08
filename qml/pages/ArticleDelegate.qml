@@ -35,6 +35,7 @@ ListItem {
     MyItem {
         author: model.author;
         time: model.time;
+        location: model.location;
         category: model.category;
         story: model.text;
         comments: model.comments;

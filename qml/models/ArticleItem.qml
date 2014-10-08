@@ -43,11 +43,22 @@ ListModel {
             for (var i in items.childs) {
                 var attrs = items.childs[i].attrs;
 
-                attrs.author = items.childs[i].getchild('author').attrs.cdata;
+                var author = items.childs[i].getchild('author');
+                attrs.author = author.attrs.cdata;
+
+                // location formatting
+                attrs.location = '';
+                if(author.attrs.region !== '') {
+                    attrs.location = author.attrs.region;
+                }
+                if(author.attrs.country !== 'France' || attrs.location.length === 0) {
+                    attrs.location += (attrs.location.length > 0?', ':'') + author.attrs.country;
+                }
 
                 var dt = new Date(attrs.date);
+                var hours = dt.getHours()+'';
                 var mins = dt.getMinutes()+'';
-                attrs.time = dt.getHours()+':'+(mins.length==1?'0'+mins:mins);
+                attrs.time = (hours.length==1?'0'+hours:hours)+':'+(mins.length==1?'0'+mins:mins);
                 attrs.date = dt.toLocaleDateString();
                 //console.log(Utils.dump(attrs));
 
