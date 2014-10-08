@@ -64,20 +64,18 @@ Page {
 
         model: ArticleItem {}
         delegate: ArticleDelegate {
-            /*
             onClicked: {
-                console.log("clicked on " + model.link);
+                console.log("clicked on " + model.id);
                 var params = {
-                    url: model.link
+                    story_id: model.id
                 }
 
-                pageStack.push(Qt.resolvedUrl("detail.qml"), params, PageStackAction.Animated)
+                pageStack.push(Qt.resolvedUrl("Comments.qml"), params, PageStackAction.Animated)
             }
-*/
         }
 
         section {
-            property: 'section'
+            property: 'date'
             delegate: SectionHeader {
                 text: section
                 height: Theme.itemSizeExtraSmall

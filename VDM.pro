@@ -39,7 +39,8 @@ OTHER_FILES += qml/VDM.qml \
     qml/pages/ArticleDelegate.qml \
     qml/lib/utils.js \
     qml/pages/MyItem.qml \
-    qml/res/icon.png
+    qml/res/icon.png \
+    qml/pages/Comments.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

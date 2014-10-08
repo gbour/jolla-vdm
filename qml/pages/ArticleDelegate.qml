@@ -33,8 +33,8 @@ ListItem {
     //height: children.height
 
     MyItem {
-        author: model.author_name;
-        date: model.date;
+        author: model.author;
+        time: model.time;
         story: model.text;
         comments: model.comments;
         agreed: model.agree;

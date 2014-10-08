@@ -23,21 +23,35 @@ ListModel {
     id: model
 
     function init(api, onComplete) {
+        /*
+        api.comments(8386466, function(xml) {
+            console.log(Utils.dump(xml));
+        });
+        return;
+        */
+
         api.list(0, function(items) {
+            //console.log('ITEMS=' + Utils.dump(items));
+            items = items.getchild('root').getchild('items');
+            if(items === undefined) {
+                return;
+            }
+
             // remove all articles
             clear();
 
-            for (var idx in items) {
-                var item = items[idx];
-                console.log('item=' + item + ","  + typeof(item))
-                console.log(item.id);
+            for (var i in items.childs) {
+                var attrs = items.childs[i].attrs;
 
-                item.date = new Date(item.date).toLocaleDateString();
-                item.author_name = item.author.author;
-                item.author = undefined;
-                console.log(Utils.dump(item));
+                attrs.author = items.childs[i].getchild('author').attrs.cdata;
 
-                append(item);
+                var dt = new Date(attrs.date);
+                var mins = dt.getMinutes()+'';
+                attrs.time = dt.getHours()+':'+(mins.length==1?'0'+mins:mins);
+                attrs.date = dt.toLocaleDateString();
+                //console.log(Utils.dump(attrs));
+
+                append(attrs);
                 //break;
             }
 

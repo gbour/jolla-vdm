@@ -33,6 +33,10 @@ FmlApi.prototype = {
         return this.__query('/view/last/' + page, {}, onComplete)
     },
 
+    comments: function(storyid, onComplete) {
+        return this.__query('/view/' + storyid, {}, onComplete);
+    },
+
 
     __query: function(uri, params, onComplete) {
         var uri = this.base + uri + '?' +
@@ -45,8 +49,8 @@ FmlApi.prototype = {
             uri += '&' + _keys[i] + '=' + params[_keys[i]];
         }
         */        
-        console.log('uri= ' + uri);
-        console.log('itm parser=' + FmlItem.parser + ',' + FmlItem.parser.start);
+        //console.log('uri= ' + uri);
+        //console.log('itm parser=' + FmlItem.parser + ',' + FmlItem.parser.start);
         //return;
 
         var http = new XMLHttpRequest();
@@ -73,54 +77,104 @@ var FmlItem = function() {
 
 FmlItem.parser = {
     __result: [],
-    __top   : undefined,
+    __top   : {
+        name: '<root>',
+        childs:[],
+        getchild: function(name) {
+                for(var i = 0; i < this.childs.length; i++) {
+                 if(this.childs[i].name === name) {
+                        return this.childs[i];
+                    }
+                }
 
-    /*
-    __result.last: function() {
-        return this[this.length-1],
+                return undefined;
+            }
     },
-    */
 
     start: function(tag, attrs, unary) {
-        console.log('FmlItem::start= ' + tag + ',' + Utils.dump(this.__top));
+        //console.log('FmlItem::start= ' + tag + ',' + Utils.dump(this.__top));
         this.__tagname = tag;
 
-        if(tag === 'root' || tag === 'items') {
-            return;
-        }
-        else if(tag === 'item') {
-            this.__top = {name: tag, obj: Utils.clone(attrs), parent: undefined};
-            this.__result.push(this.__top.obj);
+        var parent = this.__top;
 
-            console.log('>! ' + Utils.dump(this.__top));
-        }
-        else if(this.__top && this.__top.name === 'item') {
-            if(Object.keys(attrs).length > 0) {
-                this.__top.obj[tag] = Utils.clone(attrs);
-                this.__top = {name: tag, obj: this.__top.obj[tag], parent: this.__top};
-            } else {
-                // we stack up the same object, with current tagname
-                this.__top = {name: tag, obj: this.__top.obj, parent: this.__top};
+        this.__top = {
+            name: tag,
+            attrs: Utils.clone(attrs),
+            childs: [],
+            parent: parent,
+            getchild: function(name) {
+                //console.log("GETCHILD=" + this);
+                for(var i = 0; i < this.childs.length; i++) {
+                    if(this.childs[i].name === name) {
+                        return this.childs[i];
+                    }
+                }
+
+                return undefined;
             }
-        }
+        };
+        parent.childs.push(this.__top);        
     },
 
     end: function(tag) {
+        /*
         if(this.__top) {
             this.__top = this.__top.parent;
         }
+        */
+        var node   = this.__top;
+        var parent = node.parent;
+        delete node.parent;
 
+        // return length of pseudo-hashtables
+        var hlen = function(o) {
+            return Object.keys(o).length
+        }
+
+        var remove = function(arr, elt) {
+            var idx = arr.indexOf(elt);
+            arr.splice(idx,idx);
+        }
+
+        // tree optimizations
+        // node w/o attrs and 1 cdata child:
+        //  . no params => merged in parent as node.name => cdata.value
+        //  . 1+ params => merged as node param
+        if(node.childs.length === 1 && node.childs[0].name === 'cdata') {
+            //console.log('cdata: ' + node.attrs + ',' + Object.keys(node.attrs).length + '>'+hlen(node.attrs) + ',' + Utils.dump(node))
+            if(hlen(node.attrs) === 0) {
+                //console.log('merge with parent')
+                parent.attrs[node.name] = node.childs[0].cdata;
+
+                remove(parent.childs, node);
+            } else {
+                //console.log('merge in node attrs')
+                node.attrs.cdata = node.childs[0].cdata;
+                delete node.childs[0];
+            }
+        }
+
+        // node w/o attrs and childs: name => true
+        if(hlen(node.attrs) === 0 && node.childs.length === 0) {
+            parent.attrs[node.name] = undefined;
+            remove(parent.childs, node);
+        }
+
+
+        this.__top = parent;
+        //console.log('end:' + this.__top.name);
     },
 
     chars: function(text) {
-        console.log('text= ' + text);
+        //console.log('text= ' + text);
         if(this.__top) {
-            console.log(Utils.dump(this.__top))
-            this.__top.obj[this.__top.name] = text;
+            //console.log(Utils.dump(this.__top));
+            this.__top.childs.push({name: 'cdata', cdata: text, attrs:[], childs:[]});
         }
     },
 
     result: function() {
-        return this.__result;
+        return this.__top;
     }
 }
+
