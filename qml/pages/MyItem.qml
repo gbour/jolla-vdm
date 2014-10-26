@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 //import QtGraphicalEffects 1.0
 
 Rectangle {
+    id: storyView
+
     width: parent.width -10
     height: 100
     //border.width: 3
@@ -144,6 +146,12 @@ Rectangle {
             //bottomMargin: 10
 
         }
+
+        onContentHeightChanged:  {
+            console.log("story height changed")
+            storyView.height = story.height + story.anchors.topMargin + 40
+        }
+
     }
 
     Image {
@@ -247,7 +255,7 @@ Rectangle {
     Component.onCompleted: {
         //console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
         height = story.height + story.anchors.topMargin + 40
-        parent.height = height + 20
+        //parent.height = height + 20
 
         //console.log(model.author)
         console.log(model.category)

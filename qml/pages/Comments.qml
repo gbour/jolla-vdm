@@ -30,26 +30,11 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "../lib/utils.js" as Utils
 
 Page {
-    id: page
-/*
-    MyItem {
-        author: "laloose";
-        time: "111";
-        location: "Bretagne";
-        category: "amour";
-        story: "Aujourd'hui, mon ex n'est plus dépressif. Ça faisait 8 ans qu'il n'allait pas bien, mais apparemment ça va mieux depuis que j'ai mis un terme à nos 8 ans de vie commune. VDM";
-        comments: "85";
-        agreed: "21876";
-        deserved: "2892";
-
-        anchors {
-            top: parent.top
-
-        }
-    }*/
+    id: commentsPage
+    property var story
 
     SilicaListView {
         id: commentsListView
@@ -57,40 +42,36 @@ Page {
         anchors.fill: parent
 
         header:
-            //Column {
-            //height: titleitem.height + effect.height
+            Column {
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            height: titleitem.height + effect.height
 
             MyItem {
                 id: titleitem
-            anchors.topMargin: 20
 
-            author: "laloose";
-            time: "111";
-            location: "Bretagne";
-            category: "amour";
-            story: "Aujourd'hui, mon ex n'est plus dépressif. Ça faisait 8 ans qu'il n'allait pas bien, mais apparemment ça va mieux depuis que j'ai mis un terme à nos 8 ans de vie commune. VDM";
-            comments: "85";
-            agreed: "21876";
-            deserved: "2892";
+                author: commentsPage.story.author
+                time: commentsPage.story.time
+                location: commentsPage.story.location
+                category: commentsPage.story.category
+                story: commentsPage.story.text
+                comments: comments.story.comments
+                agreed: commentsPage.story.agree
+                deserved: commentsPage.story.deserved
+            }
 
-            anchors {
-                top: parent.top
-
+            GlassItem {
+                id: effect
+                objectName: "menuitem"
+                height: Theme.paddingLarge
+                width: commentsPage.width
+                falloffRadius: Math.exp(fpixw.value)
+                radius: Math.exp(pixw.value)
+                color: Theme.highlightColor
+                cache: false
             }
         }
-        /*
-        GlassItem {
-            id: effect
-            objectName: "menuitem"
-            height: Theme.paddingLarge
-            width: page.width
-            falloffRadius: Math.exp(fpixw.value)
-            radius: Math.exp(pixw.value)
-            color: Theme.highlightColor
-            cache: false
-        }
-        }
-        */
+
 
 /*PageHeader {
 
@@ -98,6 +79,7 @@ Page {
         //}
 
         model: ListModel {
+            /*
             ListElement {
                 author: "ArroZ"
                 note: "+42"
@@ -120,7 +102,7 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
                 depth: 1
                 photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
             }
-
+            */
         }
         delegate: ListItem {
             CommentTmpl {
@@ -146,6 +128,38 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
         }
         */
         VerticalScrollDecorator {}
+
+        Component.onCompleted: {
+            root.api.comments(8385693, function(xmltree) {
+                console.log('comment loaded');
+
+                var story = xmltree.getchild('root').getchild('items').getchild('item');
+                var attrs = story.attrs;
+
+                var author = story.getchild('author');
+                attrs.author = author.attrs.cdata;
+
+                // location formatting
+                attrs.location = '';
+                if(author.attrs.region !== '') {
+                    attrs.location = author.attrs.region;
+                }
+                if(author.attrs.country !== 'France' || attrs.location.length === 0) {
+                    attrs.location += (attrs.location.length > 0?', ':'') + author.attrs.country;
+                }
+
+                var dt = new Date(attrs.date);
+                var hours = dt.getHours()+'';
+                var mins = dt.getMinutes()+'';
+                attrs.time = (hours.length==1?'0'+hours:hours)+':'+(mins.length==1?'0'+mins:mins);
+                attrs.date = dt.toLocaleDateString();
+
+                console.log(Utils.dump(attrs));
+                commentsPage.story = attrs;
+
+            });
+
+        }
     }
 }
 
