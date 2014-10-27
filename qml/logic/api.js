@@ -60,7 +60,7 @@ FmlApi.prototype = {
             if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 //console.log(http.responseText)
 
-                var items = XMLParser.XMLParser(http.responseText, FmlItem.parser);
+                var items = XMLParser.XMLParser(http.responseText, new FmlItem());
                 onComplete(items);
 
                 //var articles = scraper.fetch(http.responseText);
@@ -73,11 +73,8 @@ FmlApi.prototype = {
 }
 
 var FmlItem = function() {
-}
-
-FmlItem.parser = {
-    __result: [],
-    __top   : {
+    this.__result =  [];
+    this.__top    = {
         name: '<root>',
         childs:[],
         getchild: function(name) {
@@ -89,8 +86,10 @@ FmlItem.parser = {
 
                 return undefined;
             }
-    },
+    };
+}
 
+FmlItem.prototype = {
     start: function(tag, attrs, unary) {
         //console.log('FmlItem::start= ' + tag + ',' + Utils.dump(this.__top));
         this.__tagname = tag;

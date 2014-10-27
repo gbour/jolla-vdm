@@ -15,7 +15,7 @@ Rectangle {
     color: "transparent"
 
 
-    anchors.centerIn: parent
+    //anchors.centerIn: parent
 
     property string author;
     property string location;
@@ -147,9 +147,16 @@ Rectangle {
 
         }
 
+        Component.onCompleted: {
+            console.log("story changed")
+            storyView.onCompleted();
+        }
+
         onContentHeightChanged:  {
             console.log("story height changed")
+            ///storyView.onCompleted();
             storyView.height = story.height + story.anchors.topMargin + 40
+
         }
 
     }
@@ -253,6 +260,7 @@ Rectangle {
         */
 
     Component.onCompleted: {
+        console.log("storyView completed");
         //console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
         height = story.height + story.anchors.topMargin + 40
         //parent.height = height + 20
