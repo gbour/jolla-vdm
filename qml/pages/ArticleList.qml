@@ -70,7 +70,8 @@ Page {
                     story_id: model.id
                 }
 
-                pageStack.push(Qt.resolvedUrl("Comments.qml"), params, PageStackAction.Animated)
+                //pageStack.push(Qt.resolvedUrl("Comments.qml"), params, PageStackAction.Animated)
+                pageStack.push(root.comments, params, PageStackAction.Animated)
             }
         }
 
