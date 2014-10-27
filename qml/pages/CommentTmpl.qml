@@ -40,7 +40,7 @@ Rectangle {
             console.log("source="+source + ',' + (parent.avatar === ""))
 
             if(parent.avatar === "") {
-                source = "../res/joker.png"
+                source = "../res/default_avatar3.png"
             }
         }
     }
