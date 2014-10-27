@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 
 Rectangle {
     width: parent.width -10
-    height: Math.max(avatar.height, comment.height) + 20
+    height: Math.max(avatar.height, comment.height) + 40
     radius: 20
     //border.color: "white"
     //border.width: 3
@@ -75,7 +75,7 @@ Rectangle {
             top: comment.height < 60 ? avatar.bottom : comment.bottom
             left: avatar.left
 
-            topMargin: 3
+            topMargin: 1
             leftMargin: 0
         }
     }
@@ -108,8 +108,12 @@ Rectangle {
     Component.onCompleted: {
         /*
         height = comment.height + comment.anchors.topMargin + 40*/
-        parent.height = height + 20
+        //parent.height = height + 20
 
+    }
+
+    onHeightChanged: {
+        parent.height = height
     }
 
 }
