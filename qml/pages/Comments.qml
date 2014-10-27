@@ -42,11 +42,13 @@ Page {
         id: commentsListView
         //model: 20
         anchors.fill: parent
+        anchors {
+            top: parent.top
+            topMargin: 100
+        }
 
         header:
             Column {
-            anchors.top: parent.top
-            anchors.topMargin: 10
             height: titleitem.height + effect.height
 
             MyItem {
