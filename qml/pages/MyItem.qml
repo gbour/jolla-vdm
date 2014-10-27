@@ -6,10 +6,11 @@ Rectangle {
     id: storyView
 
     width: parent.width -10
-    height: 100
+    //height: 100
+    height: story.height + story.anchors.topMargin + thumbup.height + thumbup.anchors.bottomMargin + 5
     //border.width: 3
     //border.color: "#81C6DC" //"black"
-    radius: 20
+    //radius: 20
 
     //color: "#FFFFFFFFF00"
     color: "transparent"
@@ -146,6 +147,7 @@ Rectangle {
             //bottomMargin: 10
 
         }
+        /*
 
         Component.onCompleted: {
             console.log("story changed")
@@ -158,6 +160,7 @@ Rectangle {
             storyView.height = story.height + story.anchors.topMargin + 40
 
         }
+        */
 
     }
 
@@ -259,6 +262,7 @@ Rectangle {
         }
         */
 
+    /*
     Component.onCompleted: {
         console.log("storyView completed");
         //console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
@@ -268,4 +272,10 @@ Rectangle {
         //console.log(model.author)
         console.log(model.category)
     }
+    */
+/*    onHeightChanged: {
+        console.log('HC');
+        parent.height = height;
+    }
+*/
 }

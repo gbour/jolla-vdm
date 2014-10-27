@@ -26,6 +26,7 @@ ListItem {
     //height: childrenRect.height * 2
     ///height: Math.max(icon.height, title.height+subtitle.height) + 15
     //implicitHeight: Math.max(icon.implicitHeight, (title.implicitHeight+subtitle.implicitHeight))
+    height: itm.height
 
     property string link;
 
@@ -33,6 +34,8 @@ ListItem {
     //height: children.height
 
     MyItem {
+        id: itm
+
         author: model.author;
         time: model.time;
         location: model.location;
