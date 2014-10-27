@@ -49,6 +49,7 @@ Page {
 
             MyItem {
                 id: titleitem
+                width: parent.width
 
                 author: commentsPage.story.author
                 time: commentsPage.story.time
@@ -79,6 +80,7 @@ Page {
         //}
 
         model: ListModel {
+            id: commentsListModel
             /*
             ListElement {
                 author: "ArroZ"
@@ -107,7 +109,7 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
         delegate: ListItem {
             CommentTmpl {
                 avatar: model.photo
-                comment: model.comment
+                comment: model.text
                 author: model.author
                 note: model.note
                 depth: model.depth
@@ -157,6 +159,26 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
                 console.log(Utils.dump(attrs));
                 commentsPage.story = attrs;
 
+                var comments = xmltree.getchild('root').getchild('comments');
+                commentsListModel.clear()
+
+                for(var i in comments.childs) {
+                    var comment = comments.childs[i];
+                    console.log(Utils.dump(comment));
+
+                    var attrs = comment.attrs;
+                    var author = comment.getchild('author');
+
+                    attrs.photo = author.attrs.photo;
+                    attrs.author = author.attrs.cdata
+                    attrs.depth= 0;
+                    if('in_reply_to' in attrs) {
+                        attrs.depth=1;
+                    }
+                    attrs.note = attrs.thumbs
+
+                    commentsListModel.append(comment.attrs);
+                }
             });
 
         }

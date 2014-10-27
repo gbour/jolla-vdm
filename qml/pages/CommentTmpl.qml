@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 
 Rectangle {
     width: parent.width -10
-    height: 100
+    height: Math.max(avatar.height, comment.height) + 20
     radius: 20
     //border.color: "white"
     //border.width: 3
@@ -23,14 +23,15 @@ Rectangle {
         id: avatar
         source: parent.avatar
         //source: "../res/joker.png"
-        width: 60
+        //width: 60
         height: 60
+        fillMode: Image.PreserveAspectFit
 
         anchors {
             left: parent.left
             top: parent.top
             topMargin: 5
-            leftMargin: 10 + (depth > 0 ? 60:0)
+            leftMargin: 10 + (depth > 0 ? 40:0)
         }
 
         //onSourceChanged: if(source == "") { source = "../res/joker.png" }
@@ -67,21 +68,21 @@ Rectangle {
     Label {
         id: author
         text: parent.author
-        font.pixelSize: Theme.fontSizeSmall - 8
+        font.pixelSize: Theme.fontSizeSmall - 10
         font.italic: true
 
         anchors {
-            top: comment.bottom
+            top: comment.height < 60 ? avatar.bottom : comment.bottom
             left: avatar.left
 
-            topMargin: 10
+            topMargin: 3
             leftMargin: 0
         }
     }
 
     Image {
         id: thumb
-        source: '../res/thumb-' + (parseInt(parent.note)>0?"up":"down") +'50.png'
+        source: '../res/thumb-' + (parseInt(parent.note)>=0?"up":"down") +'50.png'
         width: 20
         height: 20
 
@@ -105,7 +106,8 @@ Rectangle {
         }
     }
     Component.onCompleted: {
-        height = comment.height + comment.anchors.topMargin + 40
+        /*
+        height = comment.height + comment.anchors.topMargin + 40*/
         parent.height = height + 20
 
     }
