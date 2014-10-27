@@ -34,6 +34,8 @@ import "../lib/utils.js" as Utils
 
 Page {
     id: commentsPage
+
+    property int story_id
     property var story
 
     SilicaListView {
@@ -56,7 +58,7 @@ Page {
                 location: commentsPage.story.location
                 category: commentsPage.story.category
                 story: commentsPage.story.text
-                comments: comments.story.comments
+                comments: commentsPage.story.comments
                 agreed: commentsPage.story.agree
                 deserved: commentsPage.story.deserved
             }
@@ -244,8 +246,11 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
         VerticalScrollDecorator {}
 
         Component.onCompleted: {
-            root.api.comments(8385693, function(xmltree) {
+            console.log("loading "+story_id+" story,"+root);
+
+            root.api.comments(story_id, function(xmltree) {
                 console.log('comment loaded');
+                console.log(Utils.dump(xmltree));
 
                 var story = xmltree.getchild('root').getchild('items').getchild('item');
                 var attrs = story.attrs;
@@ -268,7 +273,7 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
                 attrs.time = (hours.length==1?'0'+hours:hours)+':'+(mins.length==1?'0'+mins:mins);
                 attrs.date = dt.toLocaleDateString();
 
-                console.log(Utils.dump(attrs));
+                //console.log(Utils.dump(attrs));
                 commentsPage.story = attrs;
 
                 var comments = xmltree.getchild('root').getchild('comments');
@@ -278,8 +283,8 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
                     var comment = comments.childs[i];
                     console.log(Utils.dump(comment));
 
-                    var attrs = comment.attrs;
-                    var author = comment.getchild('author');
+                    attrs = comment.attrs;
+                    author = comment.getchild('author');
 
                     attrs.photo = author.attrs.photo;
                     attrs.author = author.attrs.cdata
@@ -287,9 +292,11 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
                     if('in_reply_to' in attrs) {
                         attrs.depth=1;
                     }
-                    attrs.note = attrs.thumbs
 
-                    commentsListModel.append(comment.attrs);
+                    var c = comment.getchild('thumbs')
+                    attrs.note = c?c.attrs.cdata:attrs.thumbs;
+
+                    commentsListModel.append(attrs);
                 }
             });
 
