@@ -32,23 +32,30 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    Image {
+        id: logo
+        source: '../res/coverpage.png'
+
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+    }
+
+/*
     Label {
         id: label
-        anchors.centerIn: parent
-        text: qsTr("My Cover")
-    }
+        text: "Vie de Merde"
 
-    CoverActionList {
-        id: coverAction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+        anchors {
+            top: logo.bottom
+            topMargin: 5
+            horizontalCenter: parent.horizontalCenter
         }
     }
+    */
 }
 
 
