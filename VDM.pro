@@ -41,7 +41,8 @@ OTHER_FILES += qml/VDM.qml \
     qml/pages/MyItem.qml \
     qml/res/icon.png \
     qml/pages/Comments.qml \
-    qml/pages/CommentTmpl.qml
+    qml/pages/CommentTmpl.qml \
+    qml/pages/About.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

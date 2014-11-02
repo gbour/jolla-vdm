@@ -37,6 +37,7 @@
 #include <QQuickView>
 #include <QQmlEngine>
 #include <QQmlContext>
+#include <QDateTime>
 #include <sailfishapp.h>
 #include "global.h"
 
@@ -44,6 +45,8 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication *app = SailfishApp::application(argc,argv);
+    app->setApplicationVersion(APP_VERSION);
+
     QQuickView *view = SailfishApp::createView();
 
     Global *g = Global::instance();
@@ -51,6 +54,12 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("myglobal", g);
 
     view->setSource(SailfishApp::pathTo("qml/VDM.qml"));
+    view->rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
+    view->rootContext()->setContextProperty("GIT_VERSION", GIT_VERSION);
+
+    QDateTime buildat = QDateTime::fromMSecsSinceEpoch(qint64(BUILD_DATE)*1000);
+    view->rootContext()->setContextProperty("BUILD_DATE" , buildat.toString(Qt::DefaultLocaleShortDate));
+
     view->show();
 
     return app->exec();
