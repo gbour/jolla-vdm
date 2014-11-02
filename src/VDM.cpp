@@ -47,6 +47,12 @@ int main(int argc, char *argv[])
     QGuiApplication *app = SailfishApp::application(argc,argv);
     app->setApplicationVersion(APP_VERSION);
 
+    QTranslator translator;
+    translator.load("VDM-"+ QLocale::system().name().split("_").first(),
+                    SailfishApp::pathTo("translations").path());
+    //translator.load("VDM-fr", SailfishApp::pathTo("translations").path());
+    app->installTranslator(&translator);
+
     QQuickView *view = SailfishApp::createView();
 
     Global *g = Global::instance();

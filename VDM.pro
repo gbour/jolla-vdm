@@ -30,7 +30,7 @@ OTHER_FILES += qml/VDM.qml \
     rpm/VDM.changes.in \
     rpm/VDM.spec \
     rpm/VDM.yaml \
-    #translations/*.ts \
+    translations/*.ts \
     VDM.desktop \
     qml/logic/api.js \
     qml/lib/xmlparser.js \
@@ -42,12 +42,14 @@ OTHER_FILES += qml/VDM.qml \
     qml/res/icon.png \
     qml/pages/Comments.qml \
     qml/pages/CommentTmpl.qml \
-    qml/pages/About.qml
+    qml/pages/About.qml \
+    translations/VDM-fr.ts \
+    translations/VDM.ts
 
 # to disable building translations every time, comment out the
 # following CONFIG line
-#CONFIG += sailfishapp_i18n
-#TRANSLATIONS += translations/VDM-de.ts
+CONFIG += sailfishapp_i18n
+TRANSLATIONS += translations/VDM-fr.ts
 
 HEADERS += \
     src/global.h
