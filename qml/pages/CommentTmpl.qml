@@ -36,6 +36,8 @@ Rectangle {
     property string note;
     property int depth;
 
+    property int fontsize: Theme.fontSizeSmall - 2
+
     Image {
         id: avatar
         source: parent.avatar
@@ -61,7 +63,7 @@ Rectangle {
         id: comment
         text: parent.comment
         textFormat: Text.RichText
-        font.pixelSize: Theme.fontSizeSmall - 6
+        font.pixelSize: fontsize //Theme.fontSizeSmall - 6
         wrapMode: Text.WordWrap
 
         horizontalAlignment: Text.AlignLeft
@@ -73,14 +75,13 @@ Rectangle {
 
             leftMargin: 10
             rightMargin: 10
-            //topMargin: 10
         }
     }
 
     Label {
         id: author
         text: parent.author
-        font.pixelSize: Theme.fontSizeSmall - 10
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 10
         font.italic: true
 
         anchors {
@@ -97,6 +98,7 @@ Rectangle {
         source: '../res/thumb-' + (parseInt(parent.note)>=0?"up":"down") +'50.png'
         width: 20
         height: 20
+        visible: parent.note != 0
 
         anchors {
             top: author.top
@@ -108,11 +110,14 @@ Rectangle {
     Label {
         id: note
         text: parent.note
-        font.pixelSize: Theme.fontSizeSmall - 8
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
+        width: 40
+        visible: parent.note != 0
 
         anchors {
             bottom: thumb.bottom
+            bottomMargin: -3
             right: comment.right
             rightMargin: 0
         }

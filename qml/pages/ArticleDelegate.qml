@@ -26,7 +26,8 @@ ListItem {
     //height: childrenRect.height * 2
     ///height: Math.max(icon.height, title.height+subtitle.height) + 15
     //implicitHeight: Math.max(icon.implicitHeight, (title.implicitHeight+subtitle.implicitHeight))
-    height: itm.height
+    //height: 300
+    height: itm.implicitHeight
 
     property string link;
 

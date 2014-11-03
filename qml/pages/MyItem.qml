@@ -23,8 +23,7 @@ Rectangle {
     id: storyView
 
     width: parent.width -10
-    //height: 100
-    height: story.height + story.anchors.topMargin + thumbup.height + thumbup.anchors.bottomMargin + 5
+    implicitHeight: story.height + story.anchors.topMargin + thumbup.height + thumbup.anchors.bottomMargin + 5
     //border.width: 3
     //border.color: "#81C6DC" //"black"
 
@@ -38,6 +37,9 @@ Rectangle {
     property string comments;
     property string agreed;
     property string deserved;
+
+    property int fontsize: Theme.fontSizeSmall - 2
+
     Image {
         id: category
         source: '../res/categories/'+parent.category+'.png'
@@ -54,7 +56,7 @@ Rectangle {
     Label {
         id: username
         text: parent.author
-        font.pixelSize: Theme.fontSizeSmall - 6
+        font.pixelSize: fontsize //Theme.fontSizeSmall - 6
         font.bold: true
 
         anchors {
@@ -70,7 +72,7 @@ Rectangle {
     Label {
         id: location
         text: '(' + parent.location + ')'
-        font.pixelSize: Theme.fontSizeSmall - 8
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
 
         anchors {
@@ -84,9 +86,8 @@ Rectangle {
 
     Label {
         id: date
-        text: parent.time //"28/09 14:35"
-        //color: "black"
-        font.pixelSize: Theme.fontSizeSmall - 8
+        text: parent.time
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
 
         anchors {
@@ -103,7 +104,7 @@ Rectangle {
         id: story
         text: parent.story
         textFormat: Text.RichText
-        font.pixelSize: Theme.fontSizeSmall - 6
+        font.pixelSize: fontsize //6
         wrapMode: Text.WordWrap
 
         horizontalAlignment: Text.AlignLeft
@@ -121,27 +122,26 @@ Rectangle {
 
     Image {
         id: popup
-        source: '../res/comments.png'
+        source: '../res/comments4.png'
         width: 20
         height: 20
 
         anchors {
             bottom: thumbup.bottom
-            //bottomMargin: 13
             left: parent.left
             leftMargin: 20
+            bottomMargin: 3
         }
     }
 
     Label {
         id: comments
         text: parent.comments //"42"
-        font.pixelSize: Theme.fontSizeSmall - 8
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
 
         anchors {
             bottom: thumbup.bottom
-            //bottomMargin: -3
             left: popup.right
             leftMargin: 3
         }
@@ -163,8 +163,8 @@ Rectangle {
 
     Label {
         id: agreed
-        text: parent.agreed //"47345"
-        font.pixelSize: Theme.fontSizeSmall - 8
+        text: parent.agreed
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
 
         anchors {
@@ -192,7 +192,7 @@ Rectangle {
     Label {
         id: deserved
         text: parent.deserved //"143"
-        font.pixelSize: Theme.fontSizeSmall - 8
+        font.pixelSize: fontsize - 4 //Theme.fontSizeSmall - 8
         font.italic: true
 
         anchors {
