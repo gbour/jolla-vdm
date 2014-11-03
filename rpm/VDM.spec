@@ -15,9 +15,9 @@ Name:       VDM
 Summary:    VDM
 Version:    0.1
 Release:    1
-Group:      Qt/Qt
-License:    LICENSE
-URL:        http://example.org/
+Group:      Applications/Internet
+License:    GPLv3
+URL:        https://github.com/gbour/jolla-vdm
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  VDM.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
@@ -28,7 +28,10 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+VDM is a collection of user-submitted stories, likely to happen to anyone. Simple.
+This is a place where you can let it all hang out and unwind by sharing the little things
+that screw with your day, and maybe realize that you are not alone in experiencing day-to-day
+crap. There now, don't you feel better?
 
 
 %prep
