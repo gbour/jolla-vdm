@@ -23,15 +23,7 @@ ListModel {
     id: model
 
     function init(api, onComplete) {
-        /*
-        api.comments(8386466, function(xml) {
-            console.log(Utils.dump(xml));
-        });
-        return;
-        */
-
         api.list(0, function(items) {
-            //console.log('ITEMS=' + Utils.dump(items));
             items = items.getchild('root').getchild('items');
             if(items === undefined) {
                 return;

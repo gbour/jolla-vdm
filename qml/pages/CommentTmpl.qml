@@ -39,23 +39,18 @@ Rectangle {
     Image {
         id: avatar
         source: parent.avatar
-        //source: "../res/joker.png"
-        //width: 60
         height: 60
         fillMode: Image.PreserveAspectFit
 
         anchors {
-            left: parent.left
             top: parent.top
+            left: parent.left
+
             topMargin: 5
             leftMargin: 10 + (depth > 0 ? 40:0)
         }
 
-        //onSourceChanged: if(source == "") { source = "../res/joker.png" }
-
         Component.onCompleted: {
-            console.log("source="+source + ',' + (parent.avatar === ""))
-
             if(parent.avatar === "") {
                 source = "../res/default_avatar3.png"
             }
@@ -121,12 +116,6 @@ Rectangle {
             right: comment.right
             rightMargin: 0
         }
-    }
-    Component.onCompleted: {
-        /*
-        height = comment.height + comment.anchors.topMargin + 40*/
-        //parent.height = height + 20
-
     }
 
     onHeightChanged: {

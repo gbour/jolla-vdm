@@ -27,13 +27,8 @@ Rectangle {
     height: story.height + story.anchors.topMargin + thumbup.height + thumbup.anchors.bottomMargin + 5
     //border.width: 3
     //border.color: "#81C6DC" //"black"
-    //radius: 20
 
-    //color: "#FFFFFFFFF00"
     color: "transparent"
-
-
-    //anchors.centerIn: parent
 
     property string author;
     property string location;
@@ -43,31 +38,6 @@ Rectangle {
     property string comments;
     property string agreed;
     property string deserved;
-/*
-    Rectangle {
-        id: avatar
-        height: 40
-        width: 40
-        //radius: 40
-
-        x: 20
-        y: -15
-
-        //border.color: "black"
-        border.color: parent.border.color
-        border.width: 3
-
-        Image {
-            source: '../res/icon.png'
-            fillMode: Image.PreserveAspectCrop
-            asynchronous: true
-            anchors {
-                fill: parent
-                margins: 1
-            }
-        }
-    }
-*/
     Image {
         id: category
         source: '../res/categories/'+parent.category+'.png'
@@ -83,15 +53,12 @@ Rectangle {
 
     Label {
         id: username
-        //text: "Pretty Girl"
-        //text: model.author.author
         text: parent.author
         font.pixelSize: Theme.fontSizeSmall - 6
         font.bold: true
-        //color: "black"
 
         anchors {
-            left: category.right //parent.left //avatar.right
+            left: category.right
             top: parent.top
 
             leftMargin: 10
@@ -105,7 +72,6 @@ Rectangle {
         text: '(' + parent.location + ')'
         font.pixelSize: Theme.fontSizeSmall - 8
         font.italic: true
-        //color: "black"
 
         anchors {
             right: date.left
@@ -122,7 +88,6 @@ Rectangle {
         //color: "black"
         font.pixelSize: Theme.fontSizeSmall - 8
         font.italic: true
-        //horizontalAlignment: Text.AlignRight
 
         anchors {
             right: parent.right
@@ -132,17 +97,10 @@ Rectangle {
             topMargin: 3
 
         }
-
-        /*
-        Component.onCompleted: {
-            console.log("> " + parent.right + "," + parent.width)
-        }
-        */
     }
 
     Label {
         id: story
-        //text: "Aujourdh'ui, mon mari hypocondriaque porte en permanence la ceinture de son cardiofréquencemètre de course à pied pour vérifier qu'il n'est pas en train de mourir. VDM"
         text: parent.story
         textFormat: Text.RichText
         font.pixelSize: Theme.fontSizeSmall - 6
@@ -151,34 +109,14 @@ Rectangle {
         horizontalAlignment: Text.AlignLeft
 
         anchors {
-            //horizontalCenter: parent.horizontalCenter
-            //verticalCenter: parent.verticalCenter
             left: parent.left
             right: parent.right
             top: parent.top
-            //bottom: parent.bottom
 
             leftMargin: 10
             rightMargin: 10
             topMargin: 30
-            //bottomMargin: 10
-
         }
-        /*
-
-        Component.onCompleted: {
-            console.log("story changed")
-            storyView.onCompleted();
-        }
-
-        onContentHeightChanged:  {
-            console.log("story height changed")
-            ///storyView.onCompleted();
-            storyView.height = story.height + story.anchors.topMargin + 40
-
-        }
-        */
-
     }
 
     Image {
@@ -206,7 +144,6 @@ Rectangle {
             //bottomMargin: -3
             left: popup.right
             leftMargin: 3
-            //rightMargin: 10
         }
     }
 
@@ -265,34 +202,4 @@ Rectangle {
             rightMargin: 0
         }
     }
-
-        /*
-        Label {
-            id: comments
-            text: "42"
-        }
-
-*/
-    /*
-        OpacityMask {
-
-        }
-        */
-
-    /*
-    Component.onCompleted: {
-        console.log("storyView completed");
-        //console.log(parent.height + "," + height + "," + parent.id + ',' + story.height)
-        height = story.height + story.anchors.topMargin + 40
-        //parent.height = height + 20
-
-        //console.log(model.author)
-        console.log(model.category)
-    }
-    */
-/*    onHeightChanged: {
-        console.log('HC');
-        parent.height = height;
-    }
-*/
 }

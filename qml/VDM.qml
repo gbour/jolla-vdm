@@ -24,7 +24,6 @@ ApplicationWindow
 {
     id: root
 
-    //initialPage: Component { FirstPage { } }
     initialPage: Component { ArticleList { } }
     //initialPage: Component { Comments { story_id: 1 } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")

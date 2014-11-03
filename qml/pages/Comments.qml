@@ -27,9 +27,10 @@ Page {
 
     SilicaListView {
         id: commentsListView
-        //model: 20
-        anchors.fill: parent
+
         anchors {
+            fill: parent
+
             top: parent.top
             topMargin: 100
         }
@@ -64,151 +65,10 @@ Page {
             }
         }
 
-
-/*PageHeader {
-
-            title: qsTr("Nested Page")*/
-        //}
-
         model: ListModel {
             id: commentsListModel
-            /*
-            ListElement {
-                author: "ArroZ"
-                note: "+42"
-                comment: "Peut-être qu'il organisait une fête surprise.. Mais non x)"
-                depth: 0
-                photo: "http://cdn.betacie.com/fmylife/data/fr/membres/mid/556c5b3ecdbd9930e4487c6cbacfc01a.jpg"
-            }
-            ListElement {
-                author: "Mr. Citation"
-                note: "-5"
-                comment: "Il voulait organiser une fête surprise au début, mais il s'est vite rendu compte qu'avec un an de plus, le nombre de bougies ne tenaient plus sur le gâteau. Mais i
-l est paré pour l'année prochaine, il achètera un gâteau plus gros."
-                depth: 0
-                photo: "http://cdn.betacie.com/fmylife/data/fr/membres/mid/02dde4b6beaee6e4cd5e183385a607e5.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "+10"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            ListElement {
-                author: "skypok"
-                note: "0"
-                comment: "S'il est toujours la, le jours j"
-                depth: 1
-                photo: ""//"http://cdn.betacie.com/fmylife/data/fr/membres/mid/8193516d2db2e42ff958028ab447201e.jpg"
-            }
-            */
         }
+
         delegate: ListItem {
             CommentTmpl {
                 avatar: model.photo
@@ -219,19 +79,6 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
             }
         }
 
-/*
-        delegate: BackgroundItem {
-            id: delegate
-
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Item") + " " + index
-                anchors.verticalCenter: parent.verticalCenter
-                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-            }
-            onClicked: console.log("Clicked " + index)
-        }
-        */
         VerticalScrollDecorator {}
 
         Component.onCompleted: {
@@ -239,7 +86,7 @@ l est paré pour l'année prochaine, il achètera un gâteau plus gros."
 
             root.api.comments(story_id, function(xmltree) {
                 console.log('comment loaded');
-                console.log(Utils.dump(xmltree));
+                //console.log(Utils.dump(xmltree));
 
                 var story = xmltree.getchild('root').getchild('items').getchild('item');
                 var attrs = story.attrs;

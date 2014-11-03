@@ -22,6 +22,7 @@ import "../models"
 Page {
     id: articles
 
+    /*
     Row {
         id: loader
         visible: false
@@ -37,6 +38,7 @@ Page {
             anchors.verticalCenter: parent.verticalCenter
         }
     }
+    */
 
     SilicaListView {
         id: mylistview
@@ -53,24 +55,31 @@ Page {
             }
 
         }
-        // Tell SilicaFlickable the height of its content.
-        //contentHeight: column.height
-       // spacing: Theme.paddingMedium
 
-
-        header: PageHeader {
-            //title: ""
-        }
+        //header: PageHeader {    }
 
         model: ArticleItem {}
-        delegate: ArticleDelegate {
+        delegate: ListItem {
+            MyItem {
+                id: itm
+
+                author: model.author;
+                time: model.time;
+                location: model.location;
+                category: model.category;
+                story: model.text;
+                comments: model.comments;
+                agreed: model.agree;
+                deserved: model.deserved;
+
+                onHeightChanged: parent.height = height
+            }
+
             onClicked: {
-                console.log("clicked on " + model.id);
                 var params = {
                     story_id: model.id
                 }
 
-                //pageStack.push(Qt.resolvedUrl("Comments.qml"), params, PageStackAction.Animated)
                 pageStack.push(root.comments, params, PageStackAction.Animated)
             }
         }
@@ -87,17 +96,16 @@ Page {
 
 
         Component.onCompleted: {
-            // initialize JS context
             refresh();
-            //model.append({'category': 'yoyo', 'foo': { 'author': 'YOYO'}})
         }
 
         function refresh() {
             console.log("refreshing items list...");
 
-            loader.visible = true; loader_bi.running = true;
+            //loader.visible = true; loader_bi.running = true;
             model.init(root.api, function()
-                { loader.visible = false; loader_bi.running = false; }
+                {}
+                //{ loader.visible = false; loader_bi.running = false; }
             );
 
         }

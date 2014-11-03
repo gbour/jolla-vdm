@@ -25,7 +25,6 @@ SOURCES += src/VDM.cpp \
 
 OTHER_FILES += qml/VDM.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
     rpm/VDM.changes.in \
     rpm/VDM.spec \
@@ -36,7 +35,6 @@ OTHER_FILES += qml/VDM.qml \
     qml/lib/xmlparser.js \
     qml/models/ArticleItem.qml \
     qml/pages/ArticleList.qml \
-    qml/pages/ArticleDelegate.qml \
     qml/lib/utils.js \
     qml/pages/MyItem.qml \
     qml/res/icon.png \
