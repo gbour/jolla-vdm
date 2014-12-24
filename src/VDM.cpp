@@ -25,6 +25,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QDateTime>
+#include <QTranslator>
 #include <sailfishapp.h>
 #include "global.h"
 
