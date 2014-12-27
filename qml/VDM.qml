@@ -28,7 +28,11 @@ ApplicationWindow
     //initialPage: Component { Comments { story_id: 1 } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
-    property var api: new Api.FmlApi(myglobal.uri, 'fr', myglobal.apikey);
+    property var api: new Api.FmlApi(myglobal.uri, myglobal.locale, myglobal.apikey);
     property var comments:  Component { Comments {} }
+
+    Component.onCompleted: {
+        console.log("app started: " + myglobal.uri + "/" + myglobal.locale);
+    }
 }
 

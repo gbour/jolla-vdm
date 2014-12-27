@@ -17,6 +17,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 DEFINES += BUILD_DATE='"$(shell date '+%s')"'
 DEFINES += GIT_VERSION='\\\"$$system(git symbolic-ref --short HEAD)/$$system(git describe --always)\\\"'
 DEFINES += APIKEY='\\\"$$system(cat APIKEY)\\\"'
+DEFINES += APP_LOCALE='\\\"fr\\\"'
 
 CONFIG += sailfishapp
 

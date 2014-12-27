@@ -23,6 +23,7 @@ QScopedPointer<Global> Global::m_instance(0);
 Global::Global(QObject *parent) :
     QObject(parent)
 {
+    m_locale = APP_LOCALE;
     m_apikey = APIKEY;
     //m_uri    = "http://api.fmylife.com";      // prod
     m_uri    = "http://sandbox.betacie.com";  // sandbox

@@ -22,6 +22,7 @@
 class Global: public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString locale READ locale)
     Q_PROPERTY(QString apikey READ apikey)
     Q_PROPERTY(QString uri READ uri)
 
@@ -30,6 +31,10 @@ public:
 
     Global(QObject *parent = 0);
     //~Global();
+
+    QString locale() const {
+        return m_locale;
+    }
 
     QString apikey() const {
         return m_apikey;
@@ -42,6 +47,7 @@ public:
 private:
     static QScopedPointer<Global> m_instance;
 
+    QString m_locale;
     QString m_apikey;
     QString m_uri;
 };
