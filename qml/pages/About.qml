@@ -46,7 +46,7 @@ Page {
                 text: qsTr("
                     version %1, released at %2 (git %3).<br/>
                     <br/>
-                    The VDM Jolla application is developped by <a href=\"http://guillaume.bour.cc\">Guillaume Bour</a>, </br>
+                    The VDM Jolla application is developed by <a href=\"http://guillaume.bour.cc\">Guillaume Bour</a>, </br>
                     and distributed under GPLv3 license.<br/>
                     You are welcome to download source code at <a href=\"https://github.com/gbour/jolla-vdm\">github.com/gbour/jolla-vdm</a> and contribute.
                     <br/><br/>
@@ -54,7 +54,7 @@ Page {
                     VDM Logo and name are properties of Beta&Cie, editor of <a href=\"http://www.viedemerde.fr\">VieDeMerde</a> website.<br/>
                     Stories are displayed as posted by their authors.<br/>
                     <br/>
-                    Additionnal credits:
+                    Additional credits:
                     <ul>
                       <li><b>thumbup</b> and <b>thumbdown</b> icons by <a href=\"https://openclipart.org/detail/192852/thumbs-up-by-savanaprice-192852\">SavanaPrice (Opencliparts)</a></li>
                       <li><b>default avatar</b> by <a href=\"https://openclipart.org/detail/21196/anonymous-by-buggi\">buggi (Opencliparts)</a></li>
@@ -66,9 +66,7 @@ Page {
                 ).arg(APP_VERSION).arg(BUILD_DATE).arg(GIT_VERSION)
 
                 textFormat: Text.RichText
-                color: Theme.secondaryHighlightColor
                 font.pixelSize: Theme.fontSizeMedium
-                wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignJustify
 
                 onLinkActivated: Qt.openUrlExternally(link)
