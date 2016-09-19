@@ -46,7 +46,7 @@ Page {
                 text: qsTr("
                     version %1, released at %2 (git %3).<br/>
                     <br/>
-                    The VDM Jolla application is developped by <a href=\"http://guillaume.bour.cc\">Guillaume Bour</a>, </br>
+                    The VDM Jolla application is developed by <a href=\"http://guillaume.bour.cc\">Guillaume Bour</a>, </br>
                     and distributed under GPLv3 license.<br/>
                     You are welcome to download source code at <a href=\"https://github.com/gbour/jolla-vdm\">github.com/gbour/jolla-vdm</a> and contribute.
                     <br/><br/>
